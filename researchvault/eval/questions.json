@@ -1,0 +1,62 @@
+[
+  {
+    "question": "What is the main contribution of the paper?",
+    "expected_doc": "paper1.pdf",
+    "expected_page": 1,
+    "notes": "Replace with real question from your uploaded paper"
+  },
+  {
+    "question": "What dataset was used to evaluate the proposed method?",
+    "expected_doc": "paper1.pdf",
+    "expected_page": 4,
+    "notes": "Replace with the actual dataset name and page from your paper"
+  },
+  {
+    "question": "What baseline methods were compared against in the experiments?",
+    "expected_doc": "paper2.pdf",
+    "expected_page": 5,
+    "notes": "Replace with real comparison section from your paper"
+  },
+  {
+    "question": "What are the key limitations acknowledged by the authors?",
+    "expected_doc": "paper2.pdf",
+    "expected_page": 8,
+    "notes": "Often found in Discussion or Conclusion section"
+  },
+  {
+    "question": "What is the reported accuracy or performance metric of the proposed approach?",
+    "expected_doc": "paper1.pdf",
+    "expected_page": 6,
+    "notes": "Replace with actual result metrics from your paper"
+  },
+  {
+    "question": "Which neural architecture or model was used as the backbone?",
+    "expected_doc": "paper3.pdf",
+    "expected_page": 3,
+    "notes": "Replace with the actual model name and page"
+  },
+  {
+    "question": "What is the problem formulation described in this work?",
+    "expected_doc": "paper3.pdf",
+    "expected_page": 2,
+    "notes": "Usually in the Introduction or Problem Statement section"
+  },
+  {
+    "question": "How does the proposed method handle edge cases or out-of-distribution inputs?",
+    "expected_doc": "paper4.pdf",
+    "expected_page": 7,
+    "notes": "Replace with the specific robustness or ablation section"
+  },
+  {
+    "question": "What future work directions do the authors suggest?",
+    "expected_doc": "paper4.pdf",
+    "expected_page": 9,
+    "notes": "Usually in the Conclusion section"
+  },
+  {
+    "question": "What loss function or training objective was used?",
+    "expected_doc": "paper5.pdf",
+    "expected_page": 3,
+    "notes": "Replace with the actual training details from your paper"
+  }
+]
