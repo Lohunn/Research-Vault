@@ -18,6 +18,13 @@ export function HomePage({ selectedId, onSelectCollection, onToast }: HomePagePr
   const { documents, upload, remove, error: docError } = useDocuments(selectedId)
   const { messages, streaming, sendMessage, error: chatError } = useChat(selectedId)
 
+  // Auto-select the first collection on initial load so user is never stuck on an empty screen
+  useEffect(() => {
+    if (!selectedId && collections.length > 0) {
+      onSelectCollection(collections[0].id)
+    }
+  }, [collections, selectedId, onSelectCollection])
+
   // Propagate errors to toast
   useEffect(() => { if (colError) onToast(colError, 'error') }, [colError, onToast])
   useEffect(() => { if (docError) onToast(docError, 'error') }, [docError, onToast])
@@ -51,19 +58,20 @@ export function HomePage({ selectedId, onSelectCollection, onToast }: HomePagePr
     }
   }
 
+  // Active collection metadata
+  const activeCollection = collections.find((c) => c.id === selectedId)
+
   // Build a map of collectionId → Document[] for the sidebar
   const documentsMap: Record<string, Document[]> = {}
   if (selectedId) documentsMap[selectedId] = documents
 
-  // Also get doc counts for all collections by using sidebar's context
-  // (simple: only the selected collection's docs are loaded)
   const colsWithCount = collections.map((c: Collection) => ({
     ...c,
     docCount: c.id === selectedId ? documents.length : 0,
   }))
 
   return (
-    <div className="flex h-screen bg-slate-50 overflow-hidden">
+    <div className="flex h-screen bg-slate-50 overflow-hidden font-sans">
       <Sidebar
         collections={colsWithCount}
         documentsMap={documentsMap}
@@ -75,14 +83,22 @@ export function HomePage({ selectedId, onSelectCollection, onToast }: HomePagePr
       />
 
       {/* Main area */}
-      <main className="flex-1 flex flex-col min-w-0">
+      <main className="flex-1 flex flex-col min-w-0 h-full overflow-hidden">
         {selectedId == null ? (
-          <EmptyState variant={collections.length === 0 ? 'no-collections' : 'no-selection'} />
+          <EmptyState
+            variant={collections.length === 0 ? 'no-collections' : 'no-selection'}
+            onCreateCollection={handleCreateCollection}
+            onSelectFirst={() => collections[0] && onSelectCollection(collections[0].id)}
+          />
         ) : (
           <ChatPanel
+            collectionName={activeCollection?.name ?? 'Collection'}
+            documents={documents}
             messages={messages}
             streaming={streaming}
             onSend={sendMessage}
+            onUpload={handleUpload}
+            onDeleteDocument={handleDelete}
           />
         )}
       </main>

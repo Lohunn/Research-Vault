@@ -7,9 +7,11 @@ const MAX_SIZE_BYTES = MAX_SIZE_MB * 1024 * 1024
 interface UploadDropzoneProps {
   onUpload: (file: File) => Promise<void>
   disabled?: boolean
+  isDark?: boolean
+  compact?: boolean
 }
 
-export function UploadDropzone({ onUpload, disabled }: UploadDropzoneProps) {
+export function UploadDropzone({ onUpload, disabled, isDark = false, compact = false }: UploadDropzoneProps) {
   const [dragging, setDragging] = useState(false)
   const [sizeError, setSizeError] = useState(false)
   const [uploading, setUploading] = useState(false)
@@ -65,10 +67,17 @@ export function UploadDropzone({ onUpload, disabled }: UploadDropzoneProps) {
         onDrop={onDrop}
         onDragOver={onDragOver}
         onDragLeave={onDragLeave}
-        className={`border-2 border-dashed rounded-xl p-4 text-center cursor-pointer transition-colors
-          ${dragging ? 'border-indigo-500 bg-indigo-50' : 'border-slate-300 hover:border-indigo-400 hover:bg-slate-50'}
-          ${disabled || uploading ? 'opacity-50 cursor-not-allowed' : ''}
-        `}
+        className={`border-2 border-dashed rounded-xl text-center cursor-pointer transition-colors ${
+          compact ? 'p-3' : 'p-6'
+        } ${
+          isDark
+            ? dragging
+              ? 'border-indigo-400 bg-indigo-900/40 text-white'
+              : 'border-white/20 bg-white/5 hover:border-indigo-400 hover:bg-white/10 text-slate-300'
+            : dragging
+            ? 'border-indigo-500 bg-indigo-50/80 text-slate-800'
+            : 'border-slate-300 bg-white hover:border-indigo-400 hover:bg-slate-50/50 text-slate-600'
+        } ${disabled || uploading ? 'opacity-50 cursor-not-allowed' : ''}`}
       >
         <input
           ref={inputRef}
@@ -79,22 +88,22 @@ export function UploadDropzone({ onUpload, disabled }: UploadDropzoneProps) {
           disabled={disabled || uploading}
         />
         {uploading ? (
-          <div className="flex flex-col items-center gap-1">
-            <span className="animate-spin h-6 w-6 border-2 border-indigo-500 border-t-transparent rounded-full" />
-            <p className="text-xs text-slate-500">Uploading…</p>
+          <div className="flex flex-col items-center gap-1.5 py-1">
+            <span className="animate-spin h-5 w-5 border-2 border-indigo-500 border-t-transparent rounded-full" />
+            <p className="text-xs font-medium text-indigo-400">Uploading PDF…</p>
           </div>
         ) : (
           <div className="flex flex-col items-center gap-1">
-            <Upload size={20} className="text-slate-400" />
-            <p className="text-xs text-slate-500">
-              Drop PDF here or <span className="text-indigo-600 font-medium">browse</span>
+            <Upload size={compact ? 16 : 24} className={isDark ? 'text-indigo-400' : 'text-indigo-600'} />
+            <p className={`${compact ? 'text-xs' : 'text-sm font-medium'} leading-tight`}>
+              Drop PDF or <span className="text-indigo-400 font-semibold underline">browse</span>
             </p>
-            <p className="text-xs text-slate-400">Max {MAX_SIZE_MB} MB</p>
+            {!compact && <p className="text-xs text-slate-400">Max {MAX_SIZE_MB} MB • PDF research papers</p>}
           </div>
         )}
       </div>
       {sizeError && (
-        <div className="flex items-center gap-1.5 mt-2 text-red-600 text-xs">
+        <div className="flex items-center gap-1.5 mt-2 text-red-400 text-xs font-medium">
           <AlertCircle size={12} />
           File exceeds {MAX_SIZE_MB} MB limit
         </div>

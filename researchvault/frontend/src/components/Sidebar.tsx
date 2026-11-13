@@ -78,8 +78,8 @@ export function Sidebar({
               <div className="space-y-2 pb-2">
                 {selectedId === col.id && (
                   <>
-                    <UploadDropzone onUpload={onUpload} />
-                    <DocumentList documents={docs} onDelete={onDeleteDocument} />
+                    <UploadDropzone onUpload={onUpload} isDark={true} compact={true} />
+                    <DocumentList documents={docs} onDelete={onDeleteDocument} isDark={true} />
                   </>
                 )}
               </div>
