@@ -361,7 +361,7 @@ All configuration is via `backend/.env` (see `backend/.env.example`):
 ## Project Structure
 
 ```
-researchvault/
+.
 ├── backend/
 │   ├── app/
 │   │   ├── main.py          # FastAPI app, CORS, startup
@@ -377,14 +377,13 @@ researchvault/
 │   ├── src/
 │   │   ├── components/      # React components
 │   │   ├── hooks/           # Custom hooks (useChat, useCollections, …)
-│   │   └── lib/             # API client, utilities
+│   │   └── api/             # API client, SSE stream, types
 │   └── package.json
 ├── eval/
 │   ├── questions.json       # Ground-truth Q&A pairs for evaluation
 │   └── run_eval.py          # Evaluation harness (Hit@K, MRR, latency)
-├── docs/
-│   └── demo.gif             # (add your screen recording here)
-└── docker-compose.yml
+├── docker-compose.yml
+└── README.md
 ```
 
 ---
